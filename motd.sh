@@ -34,6 +34,9 @@ ufw_STATUS=$(systemctl status ufw | grep "Active: " | awk '{print $2}')
 vsftpd_STATUS=$(systemctl status vsftpd | grep "Active: " | awk '{print $2}')
 mysql_STATUS=$(systemctl status mysql | grep "Active: " | awk '{print $2}')
 
+# The following checks ALL running services and filters only those active
+ACTIVE_SERVICES=$(service --status-all | grep "+" | awk '{print $4}')
+
 
 # Modify this line by removing + signs so it closes nicely. Currently is assumes
 # that the username has 2 chars. If your user has 5 chars remove 3 more + signs
@@ -52,3 +55,5 @@ ${C1}+   ${C3}Service Postfix		${C1}+   ${C4}$postfix_STATUS
 ${C1}+   ${C3}Service Dovecot		${C1}+   ${C4}$dovecot_STATUS
 ${C1}++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 "
+echo -e "${C4}$ACTIVE_SERVICES"
+
